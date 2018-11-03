@@ -1,10 +1,10 @@
 module MARS_ROVERS
   class Plateau
-    attr_reader :x, :y
-    def initialize(x, y)
+    attr_reader :x, :y, :occupied
+    def initialize(x, y, occupied)
       @x = x
       @y = y
-      @occupied = [] # @occupied is an array of coordinates that are occupied by rovers
+      @occupied = occupied # @occupied is an array of coordinates that are occupied by rovers
     end
 
     def add_rover(coordinate) # place existing rover on to the plateau
@@ -18,6 +18,5 @@ module MARS_ROVERS
         false
       end
     end
-
   end
 end

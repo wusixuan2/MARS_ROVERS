@@ -34,7 +34,7 @@ module MARS_ROVERS
       end
     end
 
-    def move_forward
+    def march # move the rover
       case @orientation
       when 'N'
         @plateau.y === @y ? @y : @y = @y + 1
@@ -47,16 +47,39 @@ module MARS_ROVERS
       end
     end
 
-    def path_clear?
-
+    def forward_coordinate # return the coordinate in front of a rover
+      case @orientation
+      when 'N'
+        @plateau.y === @y ? y = @y : y = @y + 1
+        return {x: @x, y: y}
+      when 'W'
+        @x === 0 ? x = @x : x = @x - 1
+        return {x: x, y: @y}
+      when 'S'
+        @y === 0 ? y = @y : y = @y - 1
+        return {x: @x, y: y}
+      when 'E'
+        @plateau.x === @x ? x = @x : x = @x + 1
+        return {x: x, y: @y}
+      end
     end
 
-    def landing_outside?
+    def path_clear? # check if the spot in front of the rover is occupied or not
+      @plateau.occupied.each do |rover|
+        if forward_coordinate[:x] === rover[:x] && forward_coordinate[:y] === rover[:y]
+          return false
+        end
+      end
+      true
     end
 
-    def outbound?
+    def landing_inside?
+      if @x < 0 || @y < 0
+        false
+      else
+        true
+      end
     end
-
   end
 
 end
