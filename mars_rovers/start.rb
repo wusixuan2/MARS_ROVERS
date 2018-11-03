@@ -1,25 +1,13 @@
 require './lib/instruction.rb'
 require './lib/rover.rb'
 require './lib/plateau.rb'
-# require './lib/location.rb'
-# require './lib/command.rb'
 
-# orders = Instructions.new(ARGV.first)
-# orders.create_world
-# orders.process_robot_instructions
+# input = $stdin.readlines
 
-
-input = $stdin.readlines
-
-puts 'finish reading'
-
-x = input.first.split(' ')[0].strip.to_i
-y = input.first.split(' ')[1].strip.to_i
-
-instructions = input.to_a[1..-1].join
-
-puts '>>>>>>>>> final coordinates and heading for rovers <<<<<<<<'
-
-
-
+# puts '>>>>>>>>> final coordinates and heading for rovers <<<<<<<<'
+# MARS_ROVERS::Instruction.new(input).generate_output
+plateau = MARS_ROVERS::Plateau.new(0, 0)
+# rover = MARS_ROVERS::Rover.new(plateau, 0, 0, 'E')
+# puts rover.move_forward
+# puts rover.inspect
 
