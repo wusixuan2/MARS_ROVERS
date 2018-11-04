@@ -13,6 +13,9 @@ describe "Rover Class" do
     @rover_west_edge = MARS_ROVERS::Rover.new(@plateau, 0, 1, 'W')
     @rover_south_edge = MARS_ROVERS::Rover.new(@plateau, 1, 0, 'S')
     @rover_east_edge = MARS_ROVERS::Rover.new(@plateau, 5, 2, 'E')
+    @plateau.add_rover({x: 1, y: 2})
+    @plateau.add_rover({x: 2, y: 5})
+    @rover_outside = MARS_ROVERS::Rover.new(@plateau, -5, -2, 'E')
   end
   describe 'initializing' do
     it "should initialize/set attr_reader for plateau" do
@@ -97,8 +100,6 @@ describe "Rover Class" do
     end
 
     it "should return false if spot in front of rover is occupied" do
-      @plateau.add_rover({x: 1, y: 2})
-      @plateau.add_rover({x: 2, y: 5})
       expect(@rover_west.path_clear?).to eq(false)
       expect(@rover_east.path_clear?).to eq(false)
     end
@@ -115,8 +116,6 @@ describe "Rover Class" do
     end
 
     it "should not update x and y if path_clear? return true" do
-      @plateau.add_rover({x: 1, y: 2})
-      @plateau.add_rover({x: 2, y: 5})
       @rover_west.march
       @rover_east.march
       expect(@rover_west.x).to eq(2)
@@ -127,6 +126,17 @@ describe "Rover Class" do
   end
 
   describe "#landing_inside?" do
+    it "should return true if rover's inside plateau" do
+      expect(@rover.landing_inside?).to eq(true)
+    end
+
+    it "should return true if rover's on edge of plateau" do
+      expect(@rover_north_edge.landing_inside?).to eq(true)
+    end
+
+    it "should return false if rover's outside plateau" do
+      expect(@rover_outside.landing_inside?).to eq(false)
+    end
   end
 
   describe "#landing_spot_empty?" do
