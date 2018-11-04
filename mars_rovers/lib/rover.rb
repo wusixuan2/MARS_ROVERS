@@ -67,6 +67,14 @@ module MARS_ROVERS
       end
     end
 
+    def landing_inside? # check if the initial coordinate is inside the plateau
+      if @x < 0 || @y < 0 || @x > @plateau.plateau_dimention[:x] || @y > @plateau.plateau_dimention[:y]
+        false
+      else
+        true
+      end
+    end
+
 
   end
 end

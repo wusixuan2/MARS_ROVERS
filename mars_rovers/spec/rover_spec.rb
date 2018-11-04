@@ -14,7 +14,7 @@ describe "Rover Class" do
     @rover_south_edge = MARS_ROVERS::Rover.new(@plateau, 1, 0, 'S')
     @rover_east_edge = MARS_ROVERS::Rover.new(@plateau, 5, 2, 'E')
   end
-  context 'initializing' do
+  describe 'initializing' do
     it "should initialize/set attr_reader for plateau" do
       expect(@rover.plateau).to eq(@plateau)
     end
@@ -32,7 +32,7 @@ describe "Rover Class" do
     end
   end
 
-  context "instance method rotate" do
+  describe "#rotate" do
     it "should rotate to W when instructed with L and current orientation is N" do
       @rover.rotate('L')
       expect(@rover.orientation).to eq('W')
@@ -74,7 +74,7 @@ describe "Rover Class" do
     end
   end
 
-  context "instance method forward_coordinate" do
+  describe "#forward_coordinate" do
     it "should return coordinate in front of rover when it's inside plateau" do
       expect(@rover.forward_coordinate).to eq({x: 1, y: 3})
       expect(@rover_west.forward_coordinate).to eq({x: 1, y: 2})
@@ -90,7 +90,7 @@ describe "Rover Class" do
     end
   end
 
-  context "instance method path_clear?" do
+  describe "#path_clear?" do
     it "should return true if spot in front of rover is not occupied by another rover" do
       expect(@rover.path_clear?).to eq(true)
       expect(@rover_south.path_clear?).to eq(true)
@@ -104,7 +104,7 @@ describe "Rover Class" do
     end
   end
 
-  context "instance method march" do
+  describe "#march" do
     it "should update x and y if path_clear? return true" do
       @rover.march
       @rover_north_edge.march
@@ -126,4 +126,12 @@ describe "Rover Class" do
     end
   end
 
+  describe "#landing_inside?" do
+  end
+
+  describe "#landing_spot_empty?" do
+  end
+
+  describe "#valid?" do
+  end
 end
