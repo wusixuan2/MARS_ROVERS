@@ -15,7 +15,7 @@ module MARS_ROVERS
       end
     end
 
-    def plateau_valid? # check if the plateau is on the first quadrant
+    def plateau_valid? # check if the plateau is on the first quadrant or on (0, 0)
       if @plateau_dimention[:x] >= 0 && @plateau_dimention[:y] >= 0
         true
       else
