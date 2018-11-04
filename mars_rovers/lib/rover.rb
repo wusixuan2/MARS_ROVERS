@@ -34,23 +34,10 @@ module MARS_ROVERS
       end
     end
 
-    def march # move the rover
-      case @orientation
-      when 'N'
-        @plateau.y === @y ? @y : @y = @y + 1
-      when 'W'
-        @x === 0 ? @x : @x = @x - 1
-      when 'S'
-        @y === 0 ? @y : @y = @y - 1
-      when 'E'
-        @plateau.x === @x ? @x : @x = @x + 1
-      end
-    end
-
     def forward_coordinate # return the coordinate in front of a rover
       case @orientation
       when 'N'
-        @plateau.y === @y ? y = @y : y = @y + 1
+        @plateau.plateau_dimention[:y] === @y ? y = @y : y = @y + 1 # if moving out of edge, don't march
         return {x: @x, y: y}
       when 'W'
         @x === 0 ? x = @x : x = @x - 1
@@ -59,7 +46,7 @@ module MARS_ROVERS
         @y === 0 ? y = @y : y = @y - 1
         return {x: @x, y: y}
       when 'E'
-        @plateau.x === @x ? x = @x : x = @x + 1
+        @plateau.plateau_dimention[:x] === @x ? x = @x : x = @x + 1
         return {x: x, y: @y}
       end
     end
@@ -73,13 +60,37 @@ module MARS_ROVERS
       true
     end
 
-    def landing_inside?
-      if @x < 0 || @y < 0
+    def march # move the rover on conditions
+      if path_clear?
+        @x = forward_coordinate[:x]
+        @y = forward_coordinate[:y]
+      end
+    end
+
+    def landing_inside? # check if the initial coordinate is inside the plateau
+      if @x < 0 || @y < 0 || @x > @plateau.plateau_dimention[:x] || @y > @plateau.plateau_dimention[:y]
         false
       else
         true
       end
     end
-  end
 
+    def landing_spot_empty? # check if the initial coordinate is taken or not
+      @plateau.occupied.each do |rover|
+        if @x === rover[:x] && @y === rover[:y]
+          return false
+        end
+      end
+      true
+    end
+
+    def valid?
+      if landing_inside? && landing_spot_empty?
+        return true
+      else
+        return false
+      end
+    end
+
+  end
 end
