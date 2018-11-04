@@ -33,42 +33,42 @@ describe "Rover Class" do
   end
 
   describe "#rotate" do
-    it "should rotate to W when instructed with L and current orientation is N" do
+    it "instructed with L and current orientation is N" do
       @rover.rotate('L')
       expect(@rover.orientation).to eq('W')
     end
 
-    it "should rotate to S when instructed with L and current orientation is W" do
+    it "instructed with L and current orientation is W" do
       @rover_west.rotate('L')
       expect(@rover_west.orientation).to eq('S')
     end
 
-    it "should rotate to E when instructed with L and current orientation is S" do
+    it "instructed with L and current orientation is S" do
       @rover_south.rotate('L')
       expect(@rover_south.orientation).to eq('E')
     end
 
-    it "should rotate to N when instructed with L and current orientation is E" do
+    it "instructed with L and current orientation is E" do
       @rover_east.rotate('L')
       expect(@rover_east.orientation).to eq('N')
     end
 
-    it "should rotate to E when instructed with R and current orientation is N" do
+    it "instructed with R and current orientation is N" do
       @rover.rotate('R')
       expect(@rover.orientation).to eq('E')
     end
 
-    it "should rotate to N when instructed with R and current orientation is W" do
+    it "instructed with R and current orientation is W" do
       @rover_west.rotate('R')
       expect(@rover_west.orientation).to eq('N')
     end
 
-    it "should rotate to S when instructed with R and current orientation is E" do
+    it "instructed with R and current orientation is E" do
       @rover_east.rotate('R')
       expect(@rover_east.orientation).to eq('S')
     end
 
-    it "should rotate to W when instructed with R and current orientation is S" do
+    it "instructed with R and current orientation is S" do
       @rover_south.rotate('R')
       expect(@rover_south.orientation).to eq('W')
     end
@@ -91,12 +91,12 @@ describe "Rover Class" do
   end
 
   describe "#path_clear?" do
-    it "should return true if spot in front of rover is not occupied by another rover" do
+    it "should return true if spot in front of rover is not occupied" do
       expect(@rover.path_clear?).to eq(true)
       expect(@rover_south.path_clear?).to eq(true)
     end
 
-    it "should return false if spot in front of rover is occupied by another rover" do
+    it "should return false if spot in front of rover is occupied" do
       @plateau.add_rover({x: 1, y: 2})
       @plateau.add_rover({x: 2, y: 5})
       expect(@rover_west.path_clear?).to eq(false)
