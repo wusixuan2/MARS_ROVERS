@@ -26,5 +26,28 @@ describe "Plateau Class" do
       @plateau.add_rover({x: 5, y: 5})
       expect(@plateau.occupied).to eq([{x: 0, y: 0}, {x: 5, y: 5}])
     end
+
+    it "should not add coordinate to occupied if coordinate is outside of plateau" do
+      @plateau.add_rover({x: 10, y: -1})
+      expect(@plateau.occupied).to eq([])
+    end
+  end
+
+  context 'instance method plateau_valid?' do
+    before do
+      @invalid_plateau = MARS_ROVERS::Plateau.new({x: -5, y: 5})
+      @valid_plateau = MARS_ROVERS::Plateau.new({x: 0, y: 0})
+    end
+    it "should return true if the plateau is in the first quadrant" do
+      expect(@plateau.plateau_valid?).to eq(true)
+    end
+
+    it "should return true if the plateau is only on the point (0, 0)" do
+      expect(@valid_plateau.plateau_valid?).to eq(true)
+    end
+
+    it "should return false if plateau is outside the first quadrant or on (0,0)" do
+      expect(@invalid_plateau.plateau_valid?).to eq(false)
+    end
   end
 end
