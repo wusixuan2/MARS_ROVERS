@@ -104,4 +104,26 @@ describe "Rover Class" do
     end
   end
 
+  context "instance method march" do
+    it "should update x and y if path_clear? return true" do
+      @rover.march
+      @rover_north_edge.march
+      expect(@rover.x).to eq(1)
+      expect(@rover.y).to eq(3)
+      expect(@rover_north_edge.x).to eq(2)
+      expect(@rover_north_edge.y).to eq(5)
+    end
+
+    it "should not update x and y if path_clear? return true" do
+      @plateau.add_rover({x: 1, y: 2})
+      @plateau.add_rover({x: 2, y: 5})
+      @rover_west.march
+      @rover_east.march
+      expect(@rover_west.x).to eq(2)
+      expect(@rover_west.y).to eq(2)
+      expect(@rover_east.x).to eq(1)
+      expect(@rover_east.y).to eq(5)
+    end
+  end
+
 end

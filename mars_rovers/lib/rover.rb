@@ -60,6 +60,13 @@ module MARS_ROVERS
       true
     end
 
+    def march # move the rover on conditions
+      if path_clear?
+        @x = forward_coordinate[:x]
+        @y = forward_coordinate[:y]
+      end
+    end
+
 
   end
 end
