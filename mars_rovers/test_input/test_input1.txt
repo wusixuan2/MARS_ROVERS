@@ -1,0 +1,13 @@
+8 8
+0 0 N
+LLLLMMMMLMRMR
+8 8 S
+LMLLM
+3 3 S
+
+5 5 W
+L
+4 0 S
+LR
+-2 -2 W
+MMM
