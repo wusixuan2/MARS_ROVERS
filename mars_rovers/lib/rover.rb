@@ -84,5 +84,13 @@ module MARS_ROVERS
       true
     end
 
+    def valid?
+      if landing_inside? && landing_spot_empty?
+        return true
+      else
+        return false
+      end
+    end
+
   end
 end

@@ -144,11 +144,18 @@ describe "Rover Class" do
       expect(@rover_west.landing_spot_empty?).to eq(true)
     end
 
-    it "should return true if rover does not land on another rover" do
+    it "should return false if rover lands on another rover" do
       expect(@rover_south.landing_spot_empty?).to eq(false)
     end
   end
 
   describe "#valid?" do
+    it "should return true if both validation pass" do
+      expect(@rover_west.valid?).to eq(true)
+    end
+
+    it "should return false if either validaiton fails" do
+      expect(@rover_south.valid?).to eq(false)
+    end
   end
 end
