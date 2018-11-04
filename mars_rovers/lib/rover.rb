@@ -75,6 +75,14 @@ module MARS_ROVERS
       end
     end
 
+    def landing_spot_empty? # check if the initial coordinate is taken or not
+      @plateau.occupied.each do |rover|
+        if @x === rover[:x] && @y === rover[:y]
+          return false
+        end
+      end
+      true
+    end
 
   end
 end
