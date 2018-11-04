@@ -51,6 +51,15 @@ module MARS_ROVERS
       end
     end
 
+    def path_clear? # check if the spot in front of the rover is occupied or not
+      @plateau.occupied.each do |rover|
+        if forward_coordinate[:x] === rover[:x] && forward_coordinate[:y] === rover[:y]
+          return false
+        end
+      end
+      true
+    end
+
 
   end
 end
