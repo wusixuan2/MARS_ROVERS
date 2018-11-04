@@ -6,6 +6,13 @@ describe "Rover Class" do
   before do
     @plateau = MARS_ROVERS::Plateau.new({x: 5, y: 5})
     @rover = MARS_ROVERS::Rover.new(@plateau, 1, 2, 'N')
+    @rover_west = MARS_ROVERS::Rover.new(@plateau, 1, 2, 'W')
+    @rover_south = MARS_ROVERS::Rover.new(@plateau, 1, 2, 'S')
+    @rover_east = MARS_ROVERS::Rover.new(@plateau, 1, 2, 'E')
+    @rover_north_edge = MARS_ROVERS::Rover.new(@plateau, 2, 5, 'N')
+    @rover_west_edge = MARS_ROVERS::Rover.new(@plateau, 0, 3, 'W')
+    @rover_south_edge = MARS_ROVERS::Rover.new(@plateau, 1, 0, 'S')
+    @rover_east_edge = MARS_ROVERS::Rover.new(@plateau, 5, 2, 'E')
   end
   context 'initializing' do
     it "should initialize/set attr_reader for plateau" do
@@ -26,11 +33,6 @@ describe "Rover Class" do
   end
 
   context "instance method rotate" do
-    before do
-      @rover_west = MARS_ROVERS::Rover.new(@plateau, 1, 2, 'W')
-      @rover_south = MARS_ROVERS::Rover.new(@plateau, 1, 2, 'S')
-      @rover_east = MARS_ROVERS::Rover.new(@plateau, 1, 2, 'E')
-    end
     it "should rotate to W when instructed with L and current orientation is N" do
       @rover.rotate('L')
       expect(@rover.orientation).to eq('W')
@@ -71,4 +73,21 @@ describe "Rover Class" do
       expect(@rover_south.orientation).to eq('W')
     end
   end
+
+  context "instance method forward_coordinate" do
+    it "should return coordinate in front of rover when it's inside plateau" do
+      expect(@rover.forward_coordinate).to eq({x: 1, y: 3})
+      expect(@rover_west.forward_coordinate).to eq({x: 0, y: 2})
+      expect(@rover_south.forward_coordinate).to eq({x: 1, y: 1})
+      expect(@rover_east.forward_coordinate).to eq({x: 2, y: 2})
+    end
+
+    it "should return rover's coordinate when it's on the edge of plateau" do
+      expect(@rover_north_edge.forward_coordinate).to eq({x: 2, y: 5})
+      expect(@rover_west_edge.forward_coordinate).to eq({x: 0, y: 3})
+      expect(@rover_south_edge.forward_coordinate).to eq({x: 1, y: 0})
+      expect(@rover_east_edge.forward_coordinate).to eq({x: 5, y: 2})
+    end
+  end
+
 end
