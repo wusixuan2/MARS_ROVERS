@@ -30,7 +30,7 @@ module MARS_ROVERS
       end
     end
 
-    def create_rover # return a rover instance with a line of input of coordinates and orientation
+    def create_rover # read current instruction and return a rover instance if it's valid
       x = @current_rover_instruction.split(' ')[0].to_i
       y = @current_rover_instruction.split(' ')[1].to_i
       orientation = @current_rover_instruction.split(' ')[2]
@@ -44,7 +44,7 @@ module MARS_ROVERS
       @final_list_rover.push(@current_rover.x.to_s + ' ' + @current_rover.y.to_s + ' ' + @current_rover.orientation.to_s)
     end
 
-    def move_rover # read moving instruction and return coordinate and orientation for one rover
+    def move_rover # read current moving instruction update accordingly
       if @current_rover && @current_move_instruction # if the rover lands succesfully and instruction for moving exist
         @current_move_instruction.split('').each do |move|
           if move === 'L' || move === 'R'
@@ -61,7 +61,7 @@ module MARS_ROVERS
       end
     end
 
-    def read_instruction
+    def read_instruction # go through entire input, create and move rover for each instruction
       create_plateau
       process_instructions
       @processed_instructions.map do |instruction|
