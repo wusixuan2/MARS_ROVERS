@@ -45,4 +45,46 @@ describe "Instruction Class" do
     end
   end
 
+  describe "#generate_output" do
+    before do
+      @instruction.generate_output
+    end
+    it "invoke create_plateau" do
+      expect(@instruction.plateau).to be_an_instance_of(MARS_ROVERS::Plateau)
+    end
+
+    it "invoke process_instructions" do
+      expect(@instruction.processed_instructions).to eq([["1 2 N", "LMLMLMLMM"], ["3 3 E", "MMRMMRMRRM"]])
+    end
+    context "loop through processed_instructions" do
+      it "update current_rover_instruction" do
+        expect(@instruction.current_rover_instruction).to eq("3 3 E")
+      end
+
+      it "update current_move_instruction" do
+        expect(@instruction.current_move_instruction).to eq("MMRMMRMRRM")
+      end
+
+      it "invoke create_rover" do
+        expect(@instruction.current_rover).to be_an_instance_of(MARS_ROVERS::Rover)
+      end
+
+      it "invoke move_rover" do
+        expect(@instruction.current_rover.x).to eq(4)
+        expect(@instruction.current_rover.y).to eq(3)
+        expect(@instruction.current_rover.orientation).to eq('E')
+      end
+
+    end
+
+
+
+  end
+  it 'print result' do
+      expected_output =  "1 3 N\n4 3 E\n"
+      expect do
+        @instruction.generate_output
+      end.to output(expected_output).to_stdout
+    end
+
 end

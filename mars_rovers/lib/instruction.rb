@@ -1,6 +1,6 @@
 module MARS_ROVERS
   class Instruction
-    attr_reader :instructions, :final_list_rover, :plateau, :processed_instructions
+    attr_reader :instructions, :final_list_rover, :plateau, :processed_instructions, :current_rover, :current_rover_instruction, :current_move_instruction
     def initialize(input)
       @instructions = input.split(/\n/) # convert the instructions from string to arrays
       @final_list_rover = [];
@@ -28,6 +28,35 @@ module MARS_ROVERS
           rover_tracker += 1
         end
       end
+    end
+
+    def create_rover
+      x = @current_rover_instruction.split(' ')[0].to_i
+      y = @current_rover_instruction.split(' ')[1].to_i
+      orientation = @current_rover_instruction.split(' ')[2]
+      @current_rover = Rover.new(@plateau, x, y, orientation)
+    end
+
+    def add_rover_coordinate
+      @final_list_rover.push(@current_rover.x.to_s + ' ' + @current_rover.y.to_s + ' ' + @current_rover.orientation.to_s)
+    end
+
+    def move_rover
+      @current_rover.march
+      add_rover_coordinate
+    end
+
+    def generate_output
+      create_plateau
+      process_instructions
+      @processed_instructions.map do |instruction|
+        @current_rover_instruction = instruction[0]
+        @current_move_instruction = instruction[1]
+        create_rover
+        move_rover
+      end
+      puts @final_list_rover
+      return
     end
 
   end
