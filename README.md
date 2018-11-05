@@ -58,7 +58,7 @@ instance method:
 
 My thought process: 
 
-// planning
+// planning:
 I decide to use TDD and focus on OOP while solving this problem. I use TDD because I want to produce clean, maintainable code. I focus on OOP because it’s intuitive to use classes and instances to keep track of each rover and their property. And I'll follow red-green-refractor for the testing.
 
 I learned RSpec but I have no hand on experience with TDD, so i decide to write the solution out first, get a general idea of the solution and start over with TDD. and I’ll be able to refractor the code along the way.
@@ -79,7 +79,7 @@ some note:
 4. I create a instance variable final_list_rover to keep track of the ouput, and it is being printed at the end
 
 
-// start over and use TDD approach
+// start over and use TDD approach:
 I wrote all the tests cases before starting TDD, follow them as I write.
 TDD with class plateau and rover is very straightforward since each instance method is indenpendent, but it got tricky with testing create_rover, move_rover, and read_instruction. Since read_instruction create the instance variable @current_rover_instruction and @current_move_instruction that create_rover and move_rover takes, and in the test i cannot update the instance variable directly, so that I cannot test them separately. So I started testing with read_instruction first, and write a very basic implementation of create_rover and move_rover, just to test their relationship. then when I test create_rover and move_rover, i called read_instruction to help me update instance variable.
 
