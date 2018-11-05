@@ -17,7 +17,7 @@ describe "Rover Class" do
     @plateau.add_rover({x: 2, y: 5})
     @rover_outside = MARS_ROVERS::Rover.new(@plateau, -5, -2, 'E')
   end
-  describe 'initializing' do
+  context 'initializing' do
     it "should initialize/set attr_reader for plateau" do
       expect(@rover.plateau).to eq(@plateau)
     end

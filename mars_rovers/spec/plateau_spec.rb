@@ -5,7 +5,7 @@ describe "Plateau Class" do
   before do
     @plateau = MARS_ROVERS::Plateau.new({x: 5, y: 5})
   end
-  describe 'initializing' do
+  context 'initializing' do
     it "should initialize/set attr_reader for plateau_dimention" do
       expect(@plateau.plateau_dimention).to eq({x: 5, y: 5})
     end
