@@ -38,4 +38,11 @@ describe "Instruction Class" do
     end
   end
 
+  describe "#process_instructions" do
+    it "should create and update processed_instructions" do
+      @instruction.process_instructions
+      expect(@instruction.processed_instructions).to eq([["1 2 N", "LMLMLMLMM"], ["3 3 E", "MMRMMRMRRM"]])
+    end
+  end
+
 end
