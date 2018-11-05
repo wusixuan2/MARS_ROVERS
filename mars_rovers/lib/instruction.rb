@@ -30,11 +30,14 @@ module MARS_ROVERS
       end
     end
 
-    def create_rover
+    def create_rover # return a rover instance with a line of input of coordinates and orientation
       x = @current_rover_instruction.split(' ')[0].to_i
       y = @current_rover_instruction.split(' ')[1].to_i
       orientation = @current_rover_instruction.split(' ')[2]
       @current_rover = Rover.new(@plateau, x, y, orientation)
+      if !@current_rover.valid? # if the rover lands on another rover or outside plateau, ignore it
+        @current_rover = nil
+      end
     end
 
     def add_rover_coordinate
@@ -42,8 +45,10 @@ module MARS_ROVERS
     end
 
     def move_rover
+      if @current_rover
       @current_rover.march
       add_rover_coordinate
+    end
     end
 
     def generate_output

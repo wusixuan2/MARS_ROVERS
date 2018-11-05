@@ -74,17 +74,46 @@ describe "Instruction Class" do
         expect(@instruction.current_rover.y).to eq(3)
         expect(@instruction.current_rover.orientation).to eq('E')
       end
-
     end
-
-
-
   end
-  it 'print result' do
+
+  describe "final output" do
+    it 'print result' do
       expected_output =  "1 3 N\n4 3 E\n"
       expect do
         @instruction.generate_output
       end.to output(expected_output).to_stdout
     end
+  end
+
+  describe "#create_rover" do
+    before do
+      @instruction.generate_output
+    end
+    it "create new rover instance" do
+      @instruction.create_rover
+      expect(@instruction.current_rover).to be_an_instance_of(MARS_ROVERS::Rover)
+    end
+
+    it "rover's dimention is based on instruction" do
+      expect(@instruction.current_rover.x).to eq(4)
+      expect(@instruction.current_rover.y).to eq(3)
+      expect(@instruction.current_rover.orientation).to eq('E')
+    end
+
+    it "if valid? return false, set rover instance to null" do
+      invalid_input = "5 5\n-1 2 N\nLMLMLMLMM"
+      @instruction1 = MARS_ROVERS::Instruction.new(invalid_input)
+      @instruction1.generate_output
+      expect(@instruction1.current_rover).to eq(nil)
+    end
+  end
+
+  describe "#add_rover_coordinate" do
+    it "update final_list_rover" do
+      @instruction.generate_output
+      expect(@instruction.final_list_rover).to eq(["1 3 N", "4 3 E"])
+    end
+  end
 
 end
