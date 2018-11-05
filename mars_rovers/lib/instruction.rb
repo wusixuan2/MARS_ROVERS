@@ -44,14 +44,24 @@ module MARS_ROVERS
       @final_list_rover.push(@current_rover.x.to_s + ' ' + @current_rover.y.to_s + ' ' + @current_rover.orientation.to_s)
     end
 
-    def move_rover
-      if @current_rover
-      @current_rover.march
-      add_rover_coordinate
-    end
+    def move_rover # read moving instruction and return coordinate and orientation for one rover
+      if @current_rover && @current_move_instruction # if the rover lands succesfully and instruction for moving exist
+        @current_move_instruction.split('').each do |move|
+          if move === 'L' || move === 'R'
+            @current_rover.rotate(move)
+          elsif move === 'M'
+            @current_rover.march
+          end
+        end
+        add_rover_coordinate
+        @plateau.add_rover({x: @current_rover.x, y: @current_rover.y })
+      elsif @current_rover
+        add_rover_coordinate
+        @plateau.add_rover({x: @current_rover.x, y: @current_rover.y })
+      end
     end
 
-    def generate_output
+    def read_instruction
       create_plateau
       process_instructions
       @processed_instructions.map do |instruction|
@@ -60,9 +70,11 @@ module MARS_ROVERS
         create_rover
         move_rover
       end
-      puts @final_list_rover
-      return
     end
 
+    def generate_output
+      read_instruction
+      puts @final_list_rover
+    end
   end
 end

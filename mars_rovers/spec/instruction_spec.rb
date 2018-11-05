@@ -45,9 +45,9 @@ describe "Instruction Class" do
     end
   end
 
-  describe "#generate_output" do
+  describe "#read_instruction" do
     before do
-      @instruction.generate_output
+      @instruction.read_instruction
     end
     it "invoke create_plateau" do
       expect(@instruction.plateau).to be_an_instance_of(MARS_ROVERS::Plateau)
@@ -70,16 +70,16 @@ describe "Instruction Class" do
       end
 
       it "invoke move_rover" do
-        expect(@instruction.current_rover.x).to eq(4)
-        expect(@instruction.current_rover.y).to eq(3)
+        expect(@instruction.current_rover.x).to eq(5)
+        expect(@instruction.current_rover.y).to eq(1)
         expect(@instruction.current_rover.orientation).to eq('E')
       end
     end
   end
 
-  describe "final output" do
+  describe "#generate_output" do
     it 'print result' do
-      expected_output =  "1 3 N\n4 3 E\n"
+      expected_output =  "1 3 N\n5 1 E\n"
       expect do
         @instruction.generate_output
       end.to output(expected_output).to_stdout
@@ -88,7 +88,11 @@ describe "Instruction Class" do
 
   describe "#create_rover" do
     before do
-      @instruction.generate_output
+      @instruction.read_instruction
+      # after invoking read_instruction on @instruction
+      # @current_rover_instruction = "3 3 E"
+      # @current_move_instruction "MMRMMRMRRM"
+      # @current_rover location: 5 1 E
     end
     it "create new rover instance" do
       @instruction.create_rover
@@ -96,23 +100,70 @@ describe "Instruction Class" do
     end
 
     it "rover's dimention is based on instruction" do
-      expect(@instruction.current_rover.x).to eq(4)
-      expect(@instruction.current_rover.y).to eq(3)
+      expect(@instruction.current_rover.x).to eq(5)
+      expect(@instruction.current_rover.y).to eq(1)
       expect(@instruction.current_rover.orientation).to eq('E')
     end
 
     it "if valid? return false, set rover instance to null" do
       invalid_input = "5 5\n-1 2 N\nLMLMLMLMM"
       @instruction1 = MARS_ROVERS::Instruction.new(invalid_input)
-      @instruction1.generate_output
+      @instruction1.read_instruction
+      # after invoking read_instruction on @instruction1
+      # @current_rover location: -1 2 N
       expect(@instruction1.current_rover).to eq(nil)
     end
   end
 
   describe "#add_rover_coordinate" do
     it "update final_list_rover" do
-      @instruction.generate_output
-      expect(@instruction.final_list_rover).to eq(["1 3 N", "4 3 E"])
+      @instruction.read_instruction
+      expect(@instruction.final_list_rover).to eq(["1 3 N", "5 1 E"])
+    end
+  end
+
+  describe "#move_rover" do
+    before do
+      @instruction.read_instruction
+      # after invoking read_instruction on @instruction
+      # @current_rover_instruction = "3 3 E"
+      # @current_move_instruction "MMRMMRMRRM"
+      # @current_rover location: 5 1 E
+      invalid_move = "5 5\n1 2 N\n\n"
+      @instruction_invalid_move = MARS_ROVERS::Instruction.new(invalid_move)
+      @instruction_invalid_move.read_instruction
+      # after invoking read_instruction on @instruction_invalid_move
+      # @current_rover_instruction = "1 2 N"
+      # @current_move_instruction "\n"
+      # @current_rover location: 1 2 N
+
+    end
+    context "instruct rover" do
+      it "move rover when valid rover and valid instruction" do
+        @instruction.move_rover # move rover base on @current_move_instruction "MMRMMRMRRM" and @current_rover location: 5 1 E
+        expect(@instruction.current_rover.x).to eq(5)
+        expect(@instruction.current_rover.y).to eq(0)
+        expect(@instruction.current_rover.orientation).to eq('E')
+      end
+
+      it "don't move rover when valid rover and invalid instruction" do
+        @instruction_invalid_move.move_rover # move rover base on @current_move_instruction "\n" and @current_rover location: 1 2 N
+        expect(@instruction_invalid_move.current_rover.x).to eq(1)
+        expect(@instruction_invalid_move.current_rover.y).to eq(2)
+        expect(@instruction_invalid_move.current_rover.orientation).to eq('N')
+      end
+    end
+
+    it "invoke add_rover_coordinate" do
+      expect(@instruction.final_list_rover).to eq(["1 3 N", "5 1 E"])
+      @instruction.move_rover
+      expect(@instruction.final_list_rover).to eq(["1 3 N", "5 1 E", "5 0 E"])
+    end
+
+    it "invoke add_rover on instance plateau" do
+      expect(@instruction.plateau.occupied).to eq([{:x=>1, :y=>3}, {:x=>5, :y=>1}])
+      @instruction.move_rover
+      expect(@instruction.plateau.occupied).to eq([{:x=>1, :y=>3}, {:x=>5, :y=>1}, {:x=>5, :y=>0}])
     end
   end
 
