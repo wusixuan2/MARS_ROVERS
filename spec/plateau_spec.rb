@@ -3,7 +3,7 @@ require "plateau"
 
 describe "Plateau Class" do
   before do
-    @plateau = MARS_ROVERS::Plateau.new({x: 5, y: 5})
+    @plateau = MarsRovers::Plateau.new({x: 5, y: 5})
   end
   context 'initializing' do
     it "should initialize/set attr_reader for plateau_dimention" do
@@ -35,8 +35,8 @@ describe "Plateau Class" do
 
   describe '#plateau_valid?' do
     before do
-      @invalid_plateau = MARS_ROVERS::Plateau.new({x: -5, y: 5})
-      @valid_plateau = MARS_ROVERS::Plateau.new({x: 0, y: 0})
+      @invalid_plateau = MarsRovers::Plateau.new({x: -5, y: 5})
+      @valid_plateau = MarsRovers::Plateau.new({x: 0, y: 0})
     end
     it "should return true if plateau is in first quadrant" do
       expect(@plateau.plateau_valid?).to eq(true)

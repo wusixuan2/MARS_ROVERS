@@ -4,18 +4,18 @@ require "plateau"
 
 describe "Rover Class" do
   before do
-    @plateau = MARS_ROVERS::Plateau.new({x: 5, y: 5})
-    @rover = MARS_ROVERS::Rover.new(@plateau, 1, 2, 'N')
-    @rover_west = MARS_ROVERS::Rover.new(@plateau, 2, 2, 'W')
-    @rover_south = MARS_ROVERS::Rover.new(@plateau, 1, 2, 'S')
-    @rover_east = MARS_ROVERS::Rover.new(@plateau, 1, 5, 'E')
-    @rover_north_edge = MARS_ROVERS::Rover.new(@plateau, 2, 5, 'N')
-    @rover_west_edge = MARS_ROVERS::Rover.new(@plateau, 0, 1, 'W')
-    @rover_south_edge = MARS_ROVERS::Rover.new(@plateau, 1, 0, 'S')
-    @rover_east_edge = MARS_ROVERS::Rover.new(@plateau, 5, 2, 'E')
+    @plateau = MarsRovers::Plateau.new({x: 5, y: 5})
+    @rover = MarsRovers::Rover.new(@plateau, 1, 2, 'N')
+    @rover_west = MarsRovers::Rover.new(@plateau, 2, 2, 'W')
+    @rover_south = MarsRovers::Rover.new(@plateau, 1, 2, 'S')
+    @rover_east = MarsRovers::Rover.new(@plateau, 1, 5, 'E')
+    @rover_north_edge = MarsRovers::Rover.new(@plateau, 2, 5, 'N')
+    @rover_west_edge = MarsRovers::Rover.new(@plateau, 0, 1, 'W')
+    @rover_south_edge = MarsRovers::Rover.new(@plateau, 1, 0, 'S')
+    @rover_east_edge = MarsRovers::Rover.new(@plateau, 5, 2, 'E')
     @plateau.add_rover({x: 1, y: 2})
     @plateau.add_rover({x: 2, y: 5})
-    @rover_outside = MARS_ROVERS::Rover.new(@plateau, -5, -2, 'E')
+    @rover_outside = MarsRovers::Rover.new(@plateau, -5, -2, 'E')
   end
   context 'initializing' do
     it "should initialize/set attr_reader for plateau" do

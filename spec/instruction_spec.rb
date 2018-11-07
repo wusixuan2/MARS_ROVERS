@@ -6,7 +6,7 @@ require "instruction"
 describe "Instruction Class" do
   before do
     sample_input = "5 5\n1 2 N\nLMLMLMLMM\n3 3 E\nMMRMMRMRRM"
-    @instruction = MARS_ROVERS::Instruction.new(sample_input)
+    @instruction = MarsRovers::Instruction.new(sample_input)
   end
 
   context 'initializing' do
@@ -22,12 +22,12 @@ describe "Instruction Class" do
   describe "#create_plateau" do
     it "create new plateau instance" do
       @instruction.create_plateau
-      expect(@instruction.plateau).to be_an_instance_of(MARS_ROVERS::Plateau)
+      expect(@instruction.plateau).to be_an_instance_of(MarsRovers::Plateau)
     end
 
     it "exit if invalid plateau" do
       invalid_input = "-5 5\n1 2 N\nLMLMLMLMM"
-      @invalid_instruction = MARS_ROVERS::Instruction.new(invalid_input)
+      @invalid_instruction = MarsRovers::Instruction.new(invalid_input)
       expect { @invalid_instruction.create_plateau }.to raise_error(SystemExit)
     end
 
@@ -50,7 +50,7 @@ describe "Instruction Class" do
       @instruction.read_instruction
     end
     it "invoke create_plateau" do
-      expect(@instruction.plateau).to be_an_instance_of(MARS_ROVERS::Plateau)
+      expect(@instruction.plateau).to be_an_instance_of(MarsRovers::Plateau)
     end
 
     it "invoke process_instructions" do
@@ -66,7 +66,7 @@ describe "Instruction Class" do
       end
 
       it "invoke create_rover" do
-        expect(@instruction.current_rover).to be_an_instance_of(MARS_ROVERS::Rover)
+        expect(@instruction.current_rover).to be_an_instance_of(MarsRovers::Rover)
       end
 
       it "invoke move_rover" do
@@ -96,7 +96,7 @@ describe "Instruction Class" do
     end
     it "create new rover instance" do
       @instruction.create_rover
-      expect(@instruction.current_rover).to be_an_instance_of(MARS_ROVERS::Rover)
+      expect(@instruction.current_rover).to be_an_instance_of(MarsRovers::Rover)
     end
 
     it "rover's dimention is based on instruction" do
@@ -107,7 +107,7 @@ describe "Instruction Class" do
 
     it "if valid? return false, set rover instance to null" do
       invalid_input = "5 5\n-1 2 N\nLMLMLMLMM"
-      @instruction1 = MARS_ROVERS::Instruction.new(invalid_input)
+      @instruction1 = MarsRovers::Instruction.new(invalid_input)
       @instruction1.read_instruction
       # after invoking read_instruction on @instruction1
       # @current_rover location: -1 2 N
@@ -130,7 +130,7 @@ describe "Instruction Class" do
       # @current_move_instruction "MMRMMRMRRM"
       # @current_rover location: 5 1 E
       invalid_move = "5 5\n1 2 N\n\n"
-      @instruction_invalid_move = MARS_ROVERS::Instruction.new(invalid_move)
+      @instruction_invalid_move = MarsRovers::Instruction.new(invalid_move)
       @instruction_invalid_move.read_instruction
       # after invoking read_instruction on @instruction_invalid_move
       # @current_rover_instruction = "1 2 N"

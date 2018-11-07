@@ -1,6 +1,7 @@
-module MARS_ROVERS
+module MarsRovers
   class Plateau
     attr_reader :plateau_dimention, :occupied
+
     def initialize(plateau_dimention)
       @plateau_dimention = plateau_dimention
       @occupied = [] # @occupied is an array of coordinates that are occupied by rovers
@@ -16,11 +17,7 @@ module MARS_ROVERS
     end
 
     def plateau_valid? # check if the plateau is on the first quadrant or on (0, 0)
-      if @plateau_dimention[:x] >= 0 && @plateau_dimention[:y] >= 0
-        true
-      else
-        false
-      end
+      @plateau_dimention[:x] >= 0 && @plateau_dimention[:y] >= 0 ? true : false
     end
   end
 end
