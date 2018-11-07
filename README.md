@@ -2,7 +2,6 @@
 
 To run the solution: 
 1. Clone this project with git clone 
-2. cd mars-rover
 3. cd mars-rover
 4. gem install rspec
 5. rspec
